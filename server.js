@@ -87,6 +87,20 @@ async function updateBookingStatus(id, status) {
     return memoryBookings[index];
 }
 
+async function deleteBookingById(id) {
+    if (isMongoConnected()) {
+        return Booking.findByIdAndDelete(id);
+    }
+
+    const index = memoryBookings.findIndex((booking) => String(booking._id) === String(id));
+    if (index === -1) {
+        return null;
+    }
+
+    const [deletedBooking] = memoryBookings.splice(index, 1);
+    return deletedBooking;
+}
+
 // MongoDB Connection
 const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/quickcab";
 
@@ -256,6 +270,24 @@ app.put("/bookings/:id/status", async (req, res) => {
 
         res.json({
             message: "Booking updated successfully",
+            booking,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+app.delete("/bookings/:id", async (req, res) => {
+    try {
+        const booking = await deleteBookingById(req.params.id);
+
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+
+        res.json({
+            message: "Booking deleted successfully",
             booking,
         });
     } catch (err) {

@@ -73,8 +73,7 @@
             <td>${booking.vehicle || ''}</td>
             <td><span class="badge ${badgeClass}">${booking.status || 'Pending'}</span></td>
             <td>
-              <button class="btn btn-sm btn-success me-2" onclick="updateStatus('${booking._id}', 'Accepted')">Accept</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="updateStatus('${booking._id}', 'Rejected')">Reject</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteBooking('${booking._id}')">Delete</button>
             </td>
           </tr>`;
       }).join('');
@@ -91,28 +90,26 @@
       }
     }
 
-    async function updateStatus(id, status) {
+    async function deleteBooking(id) {
       try {
-        const response = await fetch(`/bookings/${id}/status`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status })
+        const response = await fetch(`/bookings/${id}`, {
+          method: 'DELETE'
         });
 
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.message || 'Update failed');
+          throw new Error(data.message || 'Delete failed');
         }
 
-        showMessage(`Booking ${status.toLowerCase()} successfully.`, 'success');
+        showMessage('Booking deleted successfully.', 'success');
         await loadBookings();
       } catch (error) {
         console.error(error);
-        showMessage(error.message || 'Unable to update booking.', 'danger');
+        showMessage(error.message || 'Unable to delete booking.', 'danger');
       }
     }
 
-    window.updateStatus = updateStatus;
+    window.deleteBooking = deleteBooking;
     loadBookings();
   </script>
 </body>
