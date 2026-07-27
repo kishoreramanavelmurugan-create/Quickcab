@@ -13,10 +13,107 @@
 <body>
   <div class="container py-5">
     <div class="card p-4">
-      <h1 class="mb-3">🚖 QuickCab Admin</h1>
-      <p class="text-muted">Manage bookings, drivers, and ride requests.</p>
-      <a href="/" class="btn btn-warning">Back to Home</a>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1 class="mb-2">🚖 QuickCab Admin</h1>
+          <p class="text-muted mb-0">Manage bookings, drivers, and ride requests.</p>
+        </div>
+        <a href="/" class="btn btn-warning">Back to Home</a>
+      </div>
+
+      <div id="statusMessage" class="alert alert-info d-none"></div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Pickup</th>
+              <th>Drop</th>
+              <th>Vehicle</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="bookingTable">
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">Loading bookings...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <script>
+    const table = document.getElementById('bookingTable');
+    const statusMessage = document.getElementById('statusMessage');
+
+    function showMessage(message, type = 'info') {
+      statusMessage.className = `alert alert-${type} d-block`;
+      statusMessage.textContent = message;
+    }
+
+    function renderBookings(bookings) {
+      if (!bookings.length) {
+        table.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No bookings yet.</td></tr>';
+        return;
+      }
+
+      table.innerHTML = bookings.map((booking) => {
+        const badgeClass = booking.status === 'Accepted'
+          ? 'bg-success'
+          : booking.status === 'Rejected'
+            ? 'bg-danger'
+            : 'bg-warning text-dark';
+
+        return `
+          <tr>
+            <td>${booking.pickup || ''}</td>
+            <td>${booking.drop || ''}</td>
+            <td>${booking.vehicle || ''}</td>
+            <td><span class="badge ${badgeClass}">${booking.status || 'Pending'}</span></td>
+            <td>
+              <button class="btn btn-sm btn-success me-2" onclick="updateStatus('${booking._id}', 'Accepted')">Accept</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="updateStatus('${booking._id}', 'Rejected')">Reject</button>
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    async function loadBookings() {
+      try {
+        const response = await fetch('/bookings');
+        const bookings = await response.json();
+        renderBookings(bookings);
+      } catch (error) {
+        console.error(error);
+        showMessage('Unable to load bookings right now.', 'danger');
+      }
+    }
+
+    async function updateStatus(id, status) {
+      try {
+        const response = await fetch(`/bookings/${id}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || 'Update failed');
+        }
+
+        showMessage(`Booking ${status.toLowerCase()} successfully.`, 'success');
+        await loadBookings();
+      } catch (error) {
+        console.error(error);
+        showMessage(error.message || 'Unable to update booking.', 'danger');
+      }
+    }
+
+    window.updateStatus = updateStatus;
+    loadBookings();
+  </script>
 </body>
 </html>
