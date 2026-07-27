@@ -1,0 +1,175 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+}
+
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.login-box{
+    width:420px;
+    background:#fff;
+    padding:40px 35px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h2{
+    font-size:32px;
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.logo p{
+    color:#666;
+    font-size:15px;
+}
+
+.input-group{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-group i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#2563eb;
+}
+.input-group input{
+    width:100%;
+    padding:14px 14px 14px 45px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+    transition:.3s;
+}
+
+.input-group input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 8px rgba(37,99,235,.2);
+}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.options label{
+    color:#555;
+    cursor:pointer;
+}
+
+.options a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.options a:hover{
+    text-decoration:underline;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+.register-link{
+    margin-top:25px;
+    text-align:center;
+    font-size:15px;
+}
+
+.register-link p{
+    color:#555;
+}
+
+.register-link a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.register-link a:hover{
+    text-decoration:underline;
+}
+
+.login-box:hover{
+    transform:translateY(-5px);
+    transition:.3s ease;
+}
+
+@media(max-width:480px){
+
+    .login-box{
+        width:100%;
+        padding:30px 20px;
+        border-radius:15px;
+    }
+
+    .logo h2{
+        font-size:26px;
+    }
+
+    .logo p{
+        font-size:14px;
+    }
+
+    .input-group input{
+        font-size:14px;
+        padding:12px 12px 12px 42px;
+    }
+
+    .options{
+        flex-direction:column;
+        gap:10px;
+        align-items:flex-start;
+    }
+
+    .login-btn{
+        padding:12px;
+        font-size:15px;
+    }
+
+    .register-link{
+        font-size:14px;
+    }
+}

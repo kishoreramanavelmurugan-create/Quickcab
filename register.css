@@ -1,0 +1,198 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+}
+
+.register-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.register-box{
+    width:450px;
+    background:#fff;
+    padding:40px 35px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h2{
+    font-size:32px;
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.logo p{
+    color:#666;
+    font-size:15px;
+}
+
+.input-group{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-group i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#2563eb;
+}
+/* Register Form Part 2 */
+
+/* Input Focus Effect */
+.register-box input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 8px rgba(37,99,235,0.4);
+    outline:none;
+}
+
+
+/* Password strength / extra fields */
+.password-area{
+    position:relative;
+}
+
+
+/* Register Button */
+.register-btn{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+
+    border:none;
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+
+.register-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(37,99,235,0.4);
+
+}
+
+
+/* Login Link */
+
+.login-link{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    font-size:14px;
+
+}
+
+
+.login-link a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+
+.login-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* Error Message */
+
+.error{
+
+    color:red;
+
+    font-size:14px;
+
+    margin-top:5px;
+
+}
+
+
+/* Success Message */
+
+.success{
+
+    color:green;
+
+    font-size:14px;
+
+    margin-top:5px;
+
+}
+
+
+/* Mobile Responsive */
+
+@media(max-width:600px){
+
+    .register-container{
+
+        width:90%;
+
+        padding:20px;
+
+    }
+
+
+    .register-box h2{
+
+        font-size:24px;
+
+    }
+
+
+    .register-box input{
+
+        font-size:14px;
+
+        padding:12px;
+
+    }
+
+
+    .register-btn{
+
+        font-size:16px;
+
+    }
+
+}
