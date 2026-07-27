@@ -32,7 +32,7 @@ if (bookingForm) {
         };
 
         try {
-            const res = await fetch("http://localhost:3000/book", {
+            const res = await fetch("/book", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

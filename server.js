@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -103,7 +104,17 @@ mongoose.connect(mongoUri, {
 
 // Home Route
 app.get("/", (req, res) => {
-    res.send("QuickCab Backend Running 🚖");
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get(["/login", "/register", "/driver", "/dashboard"], (req, res) => {
+    const page = req.path === "/login"
+        ? "login.html"
+        : req.path === "/register"
+            ? "register.html"
+            : "driver.html";
+
+    res.sendFile(path.join(__dirname, page));
 });
 
 // Register Route
@@ -113,7 +124,18 @@ app.post("/register", async (req, res) => {
         const existingUser = await findUserByEmail(req.body.email);
 
         if (existingUser) {
-            return res.status(400).json({
+            const sameCredentials = existingUser.password === req.body.password
+                && existingUser.phone === req.body.phone
+                && existingUser.name === req.body.name;
+
+            if (sameCredentials) {
+                return res.json({
+                    message: "Register Success",
+                    user: existingUser
+                });
+            }
+
+            return res.status(409).json({
                 message: "User already exists"
             });
         }

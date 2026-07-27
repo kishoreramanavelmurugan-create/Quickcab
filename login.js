@@ -19,7 +19,7 @@ loginForm.addEventListener("submit", async (e) => {
 
     try {
 
-        const response = await fetch("http://localhost:3000/login", {
+        const response = await fetch("/login", {
 
             method: "POST",
 
@@ -38,7 +38,7 @@ loginForm.addEventListener("submit", async (e) => {
 
             localStorage.setItem("user", JSON.stringify(data));
 
-            window.location.href = "dashboard.html";
+            window.location.href = "/driver";
 
         } else {
 
