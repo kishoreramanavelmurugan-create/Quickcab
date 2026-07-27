@@ -107,12 +107,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get(["/login", "/register", "/driver", "/dashboard"], (req, res) => {
+app.get(["/login", "/register", "/driver", "/dashboard", "/admin"], (req, res) => {
     const page = req.path === "/login"
         ? "login.html"
         : req.path === "/register"
             ? "register.html"
-            : "driver.html";
+            : req.path === "/admin"
+                ? "admin.html"
+                : "driver.html";
 
     res.sendFile(path.join(__dirname, page));
 });

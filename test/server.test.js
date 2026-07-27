@@ -42,3 +42,32 @@ test('register endpoint works even when MongoDB is unavailable', async () => {
     await delay(500);
   }
 });
+
+test('admin page is available from the browser', async () => {
+  const server = spawn(process.execPath, ['server.js'], {
+    cwd: path.join(__dirname, '..'),
+    env: { ...process.env, PORT: '3101' },
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+
+  let output = '';
+  server.stdout.on('data', (chunk) => {
+    output += chunk.toString();
+  });
+  server.stderr.on('data', (chunk) => {
+    output += chunk.toString();
+  });
+
+  try {
+    await delay(2500);
+
+    const response = await fetch('http://127.0.0.1:3101/admin');
+    const text = await response.text();
+
+    assert.equal(response.status, 200);
+    assert.match(text, /QuickCab Admin/i);
+  } finally {
+    server.kill('SIGTERM');
+    await delay(500);
+  }
+});
